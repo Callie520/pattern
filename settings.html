@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Settings | English for Real Australia</title>
+    <link rel="stylesheet" href="style.css"><link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2272C9"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body data-page="settings">
+<header><nav class="navbar"><div class="brand">English for Real Australia</div><button class="menu-toggle" aria-label="Toggle navigation"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button><ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="patterns.html">Pattern Study</a></li>
+<li><a href="review.html">Review Center</a></li>
+<li><a href="quickadd.html">Quick Add</a></li>
+<li><a href="search.html">Search</a></li>
+<li><a href="settings.html" class="active">Settings</a></li>
+<li class="voice-select-item"><select id="voice-select" title="Select accent"><option value="au">AU</option><option value="uk">UK</option><option value="us">US</option></select></li>
+</ul></nav></header>
+<main>
+<section class="section-header"><h1>Settings</h1><p>Set your daily Pattern Study goal and manage backups.</p></section>
+<section class="settings-form">
+<form id="task-settings-form" class="add-form">
+<label for="setting-patterns">Daily Pattern Goal</label><input type="number" id="setting-patterns" min="0" max="50" step="1" required>
+<button type="submit" class="btn">Save Settings</button>
+</form>
+</section>
+<section class="backup-section" style="max-width:500px; margin:2rem auto; text-align:center;">
+<h2>Data Backup</h2><p>You can export your progress and settings or import a backup file.</p>
+<button id="export-data-btn" class="btn" style="margin-top:0.5rem;">Export Data</button>
+<input type="file" id="import-data-file" accept="application/json" style="display:none;">
+<button id="import-data-btn" class="btn" style="margin-top:0.5rem;">Import Data</button>
+</section>
+</main><footer><p>&copy; 2026 English for Real Australia</p></footer>
+<script src="data.js"></script><script src="script.js"></script>
+</body></html>

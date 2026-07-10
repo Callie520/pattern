@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English for Real Australia</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2272C9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body data-page="home">
+    <header>
+        <nav class="navbar">
+            <div class="brand">English for Real Australia</div>
+            <button class="menu-toggle" aria-label="Toggle navigation"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+            <ul class="nav-links">
+<li><a href="index.html" class="active">Home</a></li>
+<li><a href="patterns.html">Pattern Study</a></li>
+<li><a href="review.html">Review Center</a></li>
+<li><a href="quickadd.html">Quick Add</a></li>
+<li><a href="search.html">Search</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li class="voice-select-item"><select id="voice-select" title="Select accent"><option value="au">AU</option><option value="uk">UK</option><option value="us">US</option></select></li>
+</ul>
+        </nav>
+    </header>
+    <main>
+        <section class="today-plan">
+            <h2>Today's Pattern Practice</h2>
+            <div class="plan-info">
+                <p><strong>Pattern Study:</strong> <span id="plan-patterns-progress">0 / 0</span></p>
+                <p><strong>Pattern Review Due:</strong> <span id="plan-review-progress">0 / 0</span></p>
+                <p><strong>Daily Progress:</strong> <span id="plan-total-progress">0%</span></p>
+                <p><strong>🔥 Current Streak:</strong> <span id="stat-streak">0</span> Days</p>
+            </div>
+            <div class="plan-start"><button id="start-today-btn" class="btn">Start Today</button></div>
+        </section>
+        <section class="home-quick-add" style="padding:1rem;max-width:800px;margin:0 auto;">
+            <h2>Quick Add</h2>
+            <p>Capture real English from daily life.</p>
+            <p><a class="btn" href="quickadd.html">Open Quick Add</a></p>
+        </section>
+        <div class="install-app-container"><button id="install-button" class="install-btn" style="display:none;">Install App</button></div>
+        <section id="today-study-container" style="display:none; padding:1rem;"></section>
+    </main>
+    <footer><p>&copy; 2026 English for Real Australia</p></footer>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

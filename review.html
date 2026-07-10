@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Center | English for Real Australia</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <!-- PWA manifest and meta tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2272C9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body data-page="review">
+    <header>
+        <nav class="navbar">
+            <div class="brand">English for Real Australia</div>
+            <button class="menu-toggle" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="patterns.html">Pattern Study</a></li>
+<li><a href="review.html" class="active">Review Center</a></li>
+<li><a href="quickadd.html">Quick Add</a></li>
+<li><a href="search.html">Search</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li class="voice-select-item"><select id="voice-select" title="Select accent"><option value="au">AU</option><option value="uk">UK</option><option value="us">US</option></select></li>
+</ul>
+        </nav>
+    </header>
+    <main>
+        <!-- 页头 -->
+        <section class="section-header">
+            <h1>Review Center</h1>
+            <p>Review due Patterns and learned Quick Add sentences.</p>
+        </section>
+        <!-- 今日复习 -->
+        <section class="review-section">
+            <h2>Today's Review</h2>
+            <div class="content-container" id="review-today-list"></div>
+        </section>
+        <!-- 未来待复习 -->
+        <section class="review-section">
+            <h2>Upcoming Review</h2>
+            <div class="content-container" id="review-upcoming-list"></div>
+        </section>
+        <!-- 已掌握 -->
+        <section class="review-section">
+            <h2>Mastered</h2>
+            <div class="content-container" id="review-mastered-list"></div>
+        </section>
+        <!-- 学习统计 -->
+        <section class="review-section">
+            <h2>Learning Statistics</h2>
+            <div id="review-stats" class="stats"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 English for Real Australia</p>
+    </footer>
+    <!-- 数据文件包含各学习模块的短语数据 -->
+    <script src="data.js"></script>
+    <!-- 主脚本文件 -->
+    <script src="script.js"></script>
+</body>
+</html>
