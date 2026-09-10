@@ -1,56 +1,94 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English for Real Australia</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2272C9">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Quick Add | English for Real Australia</title>
+  <meta name="description" content="Capture useful English and remember it with spaced review.">
+  <meta name="theme-color" content="#1859a9">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="home">
-    <header>
-        <nav class="navbar">
-            <div class="brand">English for Real Australia</div>
-            <button class="menu-toggle" aria-label="Toggle navigation"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
-            <ul class="nav-links">
-<li><a href="index.html" class="active">Home</a></li>
-<li><a href="patterns.html">Pattern Study</a></li>
-<li><a href="review.html">Review Center</a></li>
-<li><a href="quickadd.html">Quick Add</a></li>
-<li><a href="search.html">Search</a></li>
-<li><a href="settings.html">Settings</a></li>
-<li class="voice-select-item"><select id="voice-select" title="Select accent"><option value="au">AU</option><option value="uk">UK</option><option value="us">US</option></select></li>
-</ul>
-        </nav>
-    </header>
-    <main>
-        <section class="today-plan">
-            <h2>Today's Pattern Practice</h2>
-            <div class="plan-info">
-                <p><strong>Pattern Study:</strong> <span id="plan-patterns-progress">0 / 0</span></p>
-                <p><strong>Pattern Review Due:</strong> <span id="plan-review-progress">0 / 0</span></p>
-                <p><strong>Daily Progress:</strong> <span id="plan-total-progress">0%</span></p>
-                <p><strong>🔥 Current Streak:</strong> <span id="stat-streak">0</span> Days</p>
-            </div>
-            <div class="plan-start"><button id="start-today-btn" class="btn">Start Today</button></div>
-        </section>
-        <section class="home-quick-add" style="padding:1rem;max-width:800px;margin:0 auto;">
-            <h2>Quick Add</h2>
-            <p>Capture real English from daily life.</p>
-            <p><a class="btn" href="quickadd.html">Open Quick Add</a></p>
-        </section>
-        <div class="install-app-container"><button id="install-button" class="install-btn" style="display:none;">Install App</button></div>
-        <section id="today-study-container" style="display:none; padding:1rem;"></section>
-    </main>
-    <footer><p>&copy; 2026 English for Real Australia</p></footer>
-    <script src="data.js"></script>
-    <script src="script.js"></script>
+<body data-page="quickadd">
+  <header class="app-header">
+    <a class="brand" href="index.html">English for Real Australia</a>
+    <nav class="top-nav" aria-label="Main navigation">
+      <a href="index.html" class="active" aria-current="page">Quick Add</a>
+      <a href="review.html">Memory</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="page-intro compact-intro">
+      <div>
+        <p class="eyebrow">Your own English</p>
+        <h1>Quick Add</h1>
+        <p>Save the English you meet in real life. Learn it while it is still fresh.</p>
+      </div>
+      <div class="mini-stats" aria-label="Learning summary">
+        <div><strong id="pending-count">0</strong><span>New</span></div>
+        <div><strong id="due-count">0</strong><span>Due</span></div>
+        <div><strong id="mastered-count">0</strong><span>Mastered</span></div>
+      </div>
+    </section>
+
+    <section class="panel add-panel" aria-labelledby="add-title">
+      <div class="section-heading">
+        <div>
+          <p class="step-label">01 · Capture</p>
+          <h2 id="add-title">Add a useful sentence</h2>
+        </div>
+      </div>
+      <form id="quick-add-form" class="add-form">
+        <label for="qa-english">English</label>
+        <div class="input-with-action">
+          <textarea id="qa-english" rows="2" required placeholder="e.g. I didn’t quite catch that."></textarea>
+          <button type="button" class="icon-btn" id="speak-draft-btn" aria-label="Listen to the English sentence" title="Listen">🔊</button>
+        </div>
+
+        <label for="qa-chinese">Chinese meaning</label>
+        <textarea id="qa-chinese" rows="2" required placeholder="例如：我刚才没太听清。"></textarea>
+
+        <label for="qa-note">Note <span class="optional">optional</span></label>
+        <textarea id="qa-note" rows="2" placeholder="Where you heard it, a useful variation, or a reminder"></textarea>
+
+        <div class="form-actions">
+          <button type="submit" class="btn primary-btn" id="save-sentence-btn">Save sentence</button>
+          <button type="button" class="btn quiet-btn" id="cancel-edit-btn" hidden>Cancel edit</button>
+        </div>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="panel queue-panel" aria-labelledby="queue-title">
+      <div class="section-heading queue-heading">
+        <div>
+          <p class="step-label">02 · Learn</p>
+          <h2 id="queue-title">New sentences</h2>
+          <p>Learn these first, then they will enter Memory automatically.</p>
+        </div>
+        <button id="quick-add-start-btn" class="btn primary-btn">Start learning</button>
+      </div>
+      <div id="quick-add-list" class="card-list"></div>
+    </section>
+
+    <section id="quick-add-study-container" class="study-overlay" hidden aria-live="polite"></section>
+    <button id="install-button" class="install-btn" hidden>Install app</button>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <a href="index.html" class="active" aria-current="page"><span>＋</span>Quick Add</a>
+    <a href="review.html"><span>◴</span>Memory</a>
+    <a href="settings.html"><span>⚙</span>Settings</a>
+  </nav>
+
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,15 +1,12 @@
-const CACHE_NAME = 'efra-pattern-quickadd-20260710-v1';
+const CACHE_NAME = 'efra-quickadd-v2';
 const ASSETS_TO_CACHE = [
   './',
   'index.html',
-  'patterns.html',
   'review.html',
-  'search.html',
   'quickadd.html',
   'settings.html',
   'style.css',
   'script.js',
-  'data.js',
   'manifest.json',
   'icons/icon-192.png',
   'icons/icon-512.png'
