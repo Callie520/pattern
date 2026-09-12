@@ -171,7 +171,7 @@ function saveNotes(notes) {
 }
 
 function settings() {
-  return Object.assign({ newGoal: 5, reviewGoal: 20 }, safeJSON(SETTINGS_KEY, {}));
+  return Object.assign({ newGoal: 5, reviewGoal: 20, recallDirection: 'zh-en' }, safeJSON(SETTINGS_KEY, {}));
 }
 
 function saveSettings(next) {
@@ -317,24 +317,53 @@ function sentenceCard(item, options = {}) {
   card.className = 'sentence-card';
   const note = itemNote(item);
   const status = options.status || '';
-  card.innerHTML = `
-    <div class="sentence-topline">
-      ${status ? `<span class="status-badge ${escapeHTML(status.className || '')}">${escapeHTML(status.label)}</span>` : '<span></span>'}
-      <button type="button" class="icon-btn speak-btn" aria-label="Listen">🔊</button>
-    </div>
-    <h3>${escapeHTML(item.english)}</h3>
-    <button type="button" class="text-btn reveal-btn">Show Chinese</button>
-    <p class="translation" hidden>${escapeHTML(item.chinese)}</p>
-    ${note ? `<p class="note"><span>Note</span>${escapeHTML(note)}</p>` : ''}
-    <div class="card-actions"></div>`;
+  const chineseRecall = options.recallMode === 'zh-en';
 
-  card.querySelector('.speak-btn').addEventListener('click', () => speak(item.english));
-  const reveal = card.querySelector('.reveal-btn');
-  const translation = card.querySelector('.translation');
-  reveal.addEventListener('click', () => {
-    translation.hidden = !translation.hidden;
-    reveal.textContent = translation.hidden ? 'Show Chinese' : 'Hide Chinese';
-  });
+  if (chineseRecall) {
+    card.classList.add('recall-card');
+    card.innerHTML = `
+      <p class="recall-instruction">Say this in English</p>
+      <h3 class="recall-prompt" lang="zh-CN">${escapeHTML(item.chinese)}</h3>
+      <p class="recall-hint">Say it aloud before revealing the answer.</p>
+      <button type="button" class="btn primary-btn reveal-answer-btn">Show English</button>
+      <div class="recall-answer" hidden>
+        <div class="sentence-topline">
+          <span class="answer-label">English answer</span>
+          <button type="button" class="icon-btn speak-btn" aria-label="Listen to the English answer">🔊</button>
+        </div>
+        <h3 lang="en">${escapeHTML(item.english)}</h3>
+        ${note ? `<p class="note"><span>Note</span>${escapeHTML(note)}</p>` : ''}
+        <div class="card-actions"></div>
+      </div>`;
+
+    const answer = card.querySelector('.recall-answer');
+    const reveal = card.querySelector('.reveal-answer-btn');
+    reveal.addEventListener('click', () => {
+      answer.hidden = false;
+      reveal.hidden = true;
+      speak(item.english);
+    });
+    card.querySelector('.speak-btn').addEventListener('click', () => speak(item.english));
+  } else {
+    card.innerHTML = `
+      <div class="sentence-topline">
+        ${status ? `<span class="status-badge ${escapeHTML(status.className || '')}">${escapeHTML(status.label)}</span>` : '<span></span>'}
+        <button type="button" class="icon-btn speak-btn" aria-label="Listen">🔊</button>
+      </div>
+      <h3>${escapeHTML(item.english)}</h3>
+      <button type="button" class="text-btn reveal-btn">Show Chinese</button>
+      <p class="translation" hidden>${escapeHTML(item.chinese)}</p>
+      ${note ? `<p class="note"><span>Note</span>${escapeHTML(note)}</p>` : ''}
+      <div class="card-actions"></div>`;
+
+    card.querySelector('.speak-btn').addEventListener('click', () => speak(item.english));
+    const reveal = card.querySelector('.reveal-btn');
+    const translation = card.querySelector('.translation');
+    reveal.addEventListener('click', () => {
+      translation.hidden = !translation.hidden;
+      reveal.textContent = translation.hidden ? 'Show Chinese' : 'Hide Chinese';
+    });
+  }
 
   const actions = card.querySelector('.card-actions');
   (options.actions || []).forEach(action => {
@@ -384,8 +413,9 @@ function showStudySession(container, items, mode, onFinish) {
           { label: 'Remembered', className: 'primary-btn', onClick: () => { remembered(item.id); index += 1; render(); } },
           { label: 'Mastered', className: 'text-action-btn', onClick: () => { markMastered(item.id); index += 1; render(); } }
         ];
-    wrap.appendChild(sentenceCard(item, { actions }));
-    speak(item.english);
+    const recallMode = settings().recallDirection;
+    wrap.appendChild(sentenceCard(item, { actions, recallMode }));
+    if (recallMode !== 'zh-en') speak(item.english);
   }
 
   render();
@@ -597,6 +627,8 @@ function initSettingsPage() {
   const current = settings();
   document.getElementById('setting-new-goal').value = current.newGoal;
   document.getElementById('setting-review-goal').value = current.reviewGoal;
+  const recallDirection = document.getElementById('setting-recall-direction');
+  recallDirection.value = current.recallDirection;
   const voiceSelect = document.getElementById('voice-select');
   voiceSelect.value = selectedVoiceCode;
 
@@ -606,7 +638,7 @@ function initSettingsPage() {
     const reviewGoal = Math.min(100, Math.max(1, Number(document.getElementById('setting-review-goal').value) || 20));
     selectedVoiceCode = voiceSelect.value;
     localStorage.setItem(VOICE_KEY, selectedVoiceCode);
-    saveSettings({ newGoal, reviewGoal });
+    saveSettings({ newGoal, reviewGoal, recallDirection: recallDirection.value });
     updateVoiceList();
     const status = document.getElementById('settings-status');
     status.textContent = 'Settings saved.';
