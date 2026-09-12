@@ -50,6 +50,13 @@
         <p class="field-help">Keeps a long review queue manageable. Nothing is deleted.</p>
         <input type="number" id="setting-review-goal" min="1" max="100" step="1" inputmode="numeric">
 
+        <label for="setting-recall-direction">Recall direction</label>
+        <p class="field-help">Chinese → English makes you say the sentence before seeing the answer.</p>
+        <select id="setting-recall-direction">
+          <option value="zh-en">Chinese → English (speaking practice)</option>
+          <option value="en-zh">English → Chinese</option>
+        </select>
+
         <label for="voice-select">English voice</label>
         <p class="field-help">The exact voice depends on the voices installed on your device.</p>
         <select id="voice-select">
