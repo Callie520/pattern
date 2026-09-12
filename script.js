@@ -7,7 +7,55 @@ const QUICKADD_PENDING_KEY = 'efra_quickadd_pending';
 const NOTES_KEY = 'efra_notes';
 const SETTINGS_KEY = 'efra_planSettings';
 const VOICE_KEY = 'efra_voice';
+const CLINICAL_CHUNKS_SEED_KEY = 'efra_seed_clinical_chunks_v1';
 const REVIEW_INTERVALS = [1, 3, 7, 14, 30];
+
+const CLINICAL_CHUNKS = [
+  { english: 'How are you feeling this morning?', chinese: '您今天早上感觉怎么样？' },
+  { english: 'Did it start as soon as you stood up?', chinese: '是不是您一站起来就开始了？' },
+  { english: 'Please don’t get up on your own for now.', chinese: '现在先不要自己下床。' },
+  { english: 'Just use your call bell if you need anything.', chinese: '如果您需要任何帮助，就按呼叫铃。' },
+  { english: 'I’ll let your nurse know.', chinese: '我会告诉负责您的护士。' },
+  { english: 'I’ll get someone to give us a hand.', chinese: '我去叫个人来帮我们一下。', note: 'give someone a hand = help someone' },
+  { english: 'I’m a student nurse working with your nurse today.', chinese: '我是今天跟着您的护士一起工作的实习护士。' },
+  { english: 'I just need to take your observations.', chinese: '我需要给您测一下生命体征。', note: 'observations = vital signs in Australian clinical English' },
+  { english: 'It’ll only take a few minutes.', chinese: '只需要几分钟。' },
+  { english: 'Could I get you to rest your arm here for me?', chinese: '可以请您把手臂放在这里吗？' },
+  { english: 'It might feel a little tight.', chinese: '可能会感觉有一点紧。' },
+  { english: 'How would you rate your pain?', chinese: '您会给自己的疼痛打几分？' },
+  { english: 'Where exactly is the pain?', chinese: '具体哪里痛？' },
+  { english: 'What does the pain feel like?', chinese: '疼痛是什么感觉？', note: 'Use “What does … feel like?”, not “How does … feel like?”' },
+  { english: 'Has it gotten worse?', chinese: '有没有变得更严重？', note: 'In Australian/British English, you may also hear: Has it got worse?' },
+  { english: 'Are you due for any pain relief?', chinese: '是不是到可以再次使用止痛药的时间了？', note: 'be due for = 到了该接受某项治疗或用药的时间' },
+  { english: 'You’re due for your medication at 2 pm.', chinese: '您下午两点该用药了。' },
+  { english: 'I’ll check whether you’re due for any pain relief.', chinese: '我去确认一下您现在是不是可以使用止痛药。' },
+  { english: 'Are you feeling dizzy or light-headed at all?', chinese: '您有没有觉得头晕？' },
+  { english: 'I’m going to help you sit on the edge of the bed.', chinese: '我来帮您坐到床边。' },
+  { english: 'Just pop your feet on the floor for me.', chinese: '请把脚放到地上。', note: 'pop is natural conversational English: “Pop your arm here for me.” / “Just pop this gown on.”' },
+  { english: 'There’s no rush.', chinese: '不用着急。' },
+  { english: 'Has the dizziness settled?', chinese: '头晕缓解了吗？' },
+  { english: 'Please don’t stand up on your own.', chinese: '请先不要自己站起来。' },
+  { english: 'Once you’re feeling steady, I’ll help you up.', chinese: '等您感觉站稳了，我再扶您起来。' },
+  { english: 'I’m happy to give you a hand.', chinese: '我很乐意帮您一下。', note: 'give someone a hand = help someone' },
+  { english: 'What would you normally do yourself?', chinese: '您平时哪些事情是自己做的？' },
+  { english: 'You do what you can, and I’ll help you with the rest.', chinese: '您能自己做的就自己做，剩下的我来帮您。' },
+  { english: 'I’ll give you some privacy.', chinese: '我给您留一些私人空间。' },
+  { english: 'Only where you need it.', chinese: '只在您需要帮助的地方帮您。' },
+  { english: 'Just let me know if you’re uncomfortable at any point.', chinese: '任何时候觉得不舒服，都请告诉我。' },
+  { english: 'What can I help you with?', chinese: '我可以帮您做什么？' },
+  { english: 'Do you normally need any help getting to the bathroom?', chinese: '您平时去厕所需要别人帮忙吗？' },
+  { english: 'Let me grab your walker for you.', chinese: '我帮您把助行器拿过来。', note: 'grab is common conversational English: “I’ll grab you a glass of water.” / “Let me grab your nurse.”' },
+  { english: 'How are you feeling on your feet?', chinese: '您站起来以后感觉怎么样？', note: 'on your feet = standing' },
+  { english: 'Let’s sit you back down.', chinese: '我们先让您重新坐回去。', note: 'sit back down = 重新坐回去' },
+  { english: 'We’ll take it nice and slowly.', chinese: '我们慢慢来，不着急。' },
+  { english: 'When did you last open your bowels?', chinese: '您上一次排便是什么时候？', note: 'open your bowels is a common Australian clinical expression for having a bowel movement' },
+  { english: 'Is that unusual for you?', chinese: '这对您来说和平时不一样吗？', note: 'Useful for establishing the patient’s baseline.' },
+  { english: 'Is that normal for you?', chinese: '这对您来说是正常情况吗？', note: 'Useful for establishing the patient’s baseline.' },
+  { english: 'Have you been passing wind?', chinese: '最近有排气吗？', note: 'pass wind = 排气，是较礼貌的临床表达' },
+  { english: 'Do you feel bloated?', chinese: '您觉得腹胀吗？' },
+  { english: 'Have you had any nausea or vomiting?', chinese: '您有没有恶心或者呕吐？' },
+  { english: 'I’ll pass that on to your nurse.', chinese: '我会把这个情况告诉您的护士。', note: 'pass something on to someone = 把信息转告给某人' }
+];
 
 let selectedVoiceCode = localStorage.getItem(VOICE_KEY) || 'au';
 let selectedVoice = null;
@@ -23,6 +71,36 @@ function safeJSON(key, fallback) {
 
 function saveJSON(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
+}
+
+function normalizeEnglish(value) {
+  return String(value || '').toLowerCase().replace(/[’']/g, "'").replace(/\s+/g, ' ').trim();
+}
+
+function seedClinicalChunks() {
+  if (localStorage.getItem(CLINICAL_CHUNKS_SEED_KEY) === 'done') return;
+
+  const pending = loadPending();
+  const learned = loadLearned();
+  const existingEnglish = new Set([...pending, ...learned].map(item => normalizeEnglish(item.english)));
+  const createdDate = new Date().toISOString();
+
+  CLINICAL_CHUNKS.forEach((chunk, index) => {
+    if (existingEnglish.has(normalizeEnglish(chunk.english))) return;
+    pending.push({
+      id: `clinical-placement-${String(index + 1).padStart(2, '0')}`,
+      english: chunk.english,
+      chinese: chunk.chinese,
+      note: chunk.note || '',
+      module: 'quickadd-pending',
+      category: 'quickadd-pending',
+      createdDate
+    });
+    existingEnglish.add(normalizeEnglish(chunk.english));
+  });
+
+  savePending(pending);
+  localStorage.setItem(CLINICAL_CHUNKS_SEED_KEY, 'done');
 }
 
 function startOfToday() {
@@ -600,6 +678,7 @@ function initPWA() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  seedClinicalChunks();
   updateVoiceList();
   if ('speechSynthesis' in window && speechSynthesis.onvoiceschanged !== undefined) {
     speechSynthesis.onvoiceschanged = updateVoiceList;
