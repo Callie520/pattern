@@ -7,7 +7,7 @@ const QUICKADD_PENDING_KEY = 'efra_quickadd_pending';
 const NOTES_KEY = 'efra_notes';
 const SETTINGS_KEY = 'efra_planSettings';
 const VOICE_KEY = 'efra_voice';
-const CLINICAL_CHUNKS_SEED_KEY = 'efra_seed_clinical_chunks_v1';
+const CLINICAL_CHUNKS_SEED_KEY = 'efra_seed_clinical_chunks_v2';
 const REVIEW_INTERVALS = [1, 3, 7, 14, 30];
 
 const CLINICAL_CHUNKS = [
@@ -53,8 +53,50 @@ const CLINICAL_CHUNKS = [
   { english: 'Is that normal for you?', chinese: '这对您来说是正常情况吗？', note: 'Useful for establishing the patient’s baseline.' },
   { english: 'Have you been passing wind?', chinese: '最近有排气吗？', note: 'pass wind = 排气，是较礼貌的临床表达' },
   { english: 'Do you feel bloated?', chinese: '您觉得腹胀吗？' },
-  { english: 'Have you had any nausea or vomiting?', chinese: '您有没有恶心或者呕吐？' },
-  { english: 'I’ll pass that on to your nurse.', chinese: '我会把这个情况告诉您的护士。', note: 'pass something on to someone = 把信息转告给某人' }
+  { english: 'Have you had any nausea or vomiting?', chinese: '您有没有恶心或者呕吐？' },  { english: 'I’ll pass that on to your nurse.', chinese: '我会把这个情况告诉您的护士。', note: 'pass something on to someone = 把信息转告给某人' },
+
+  // Clinical English Practice — selected additions, grouped by placement task.
+  { english: 'Let me help you roll onto your back so you can get comfortable and have a rest.', chinese: '我来帮您翻回仰卧位，这样您可以舒服地休息。', note: 'Positioning · on your back = 仰卧位' },
+  { english: 'Let’s turn you onto your other side.', chinese: '我们帮您翻到另一侧。', note: 'Positioning · onto shows movement into the new position' },
+  { english: 'Can you roll towards me?', chinese: '您可以朝我这边翻身吗？', note: 'Positioning · the opposite is “roll away from me”' },
+  { english: 'How are you feeling in that position? Are you comfortable?', chinese: '您这个姿势感觉怎么样？舒服吗？', note: 'Comfort check after repositioning' },
+  { english: 'Do you want your pillow a little higher?', chinese: '您需要把枕头再调高一点吗？', note: 'You can replace “higher” with lower, further back or further forward.' },
+  { english: 'How about there?', chinese: '放在这里怎么样？', note: 'Useful while adjusting a pillow, limb, table or bed position' },
+  { english: 'Does that feel more comfortable?', chinese: '这样感觉舒服一点了吗？', note: 'Use feel when checking the patient’s physical sensation.' },
+  { english: 'Are you comfortable like that, or would you like me to adjust anything else?', chinese: '这样舒服吗？还是需要我再调整其他地方？', note: 'Positioning · final comfort check' },
+  { english: 'Would you like me to move it a bit further to the left or right?', chinese: '您要我再往左或往右移动一点吗？', note: 'Useful when adjusting an arm, leg or pillow' },
+  { english: 'Let me reposition your arm for you.', chinese: '我帮您重新调整一下手臂的位置。', note: 'Positioning · a simpler option is “Let me move your arm for you.”' },
+
+  { english: 'Just bring your feet towards the edge of the bed for me.', chinese: '请把双脚慢慢移到床边。', note: 'Mobility · gentle instruction before sitting out or standing' },
+  { english: 'I’ll help you stand up safely.', chinese: '我会安全地协助您站起来。', note: 'Mobility · avoid pulling the patient up by the arms' },
+  { english: 'I’ll stay with you until the dizziness settles.', chinese: '我会陪着您，直到头晕缓解。', note: 'Falls safety · calm reassurance after postural dizziness' },
+  { english: 'Before we get you up, I just need to check how you normally mobilise.', chinese: '在扶您起来前，我需要先确认您平时怎样活动。', note: 'Mobility · mobilise is common Australian ward language' },
+  { english: 'Do you normally need one person to help you, or can you manage on your own?', chinese: '您平时需要一人协助，还是自己可以完成？', note: 'Mobility · checks the usual assistance level' },
+  { english: 'I’ll just check your mobility plan first and make sure we’re doing it safely.', chinese: '我先确认您的活动计划，确保我们安全操作。', note: 'Mobility · useful when the patient wants to get up immediately' },
+  { english: 'Please don’t stand up just yet.', chinese: '请先不要站起来。', note: '“just yet” makes the safety instruction sound softer.' },
+  { english: 'When you’re ready, push up from the bed with your hands.', chinese: '准备好后，请用双手撑着床面站起来。', note: 'Transfer · clear instruction without pulling the patient' },
+  { english: 'Once you’re steady on your feet, we’ll turn towards the chair.', chinese: '等您站稳后，我们再转向椅子。', note: 'Transfer · pause and check balance before turning' },
+  { english: 'Don’t strain yourself.', chinese: '不要太用力，别勉强自己。', note: 'Repositioning · stop the patient from overexerting' },
+
+  { english: 'When did you first notice it?', chinese: '您最开始什么时候注意到这个症状的？', note: 'Assessment · useful for pain, breathlessness, dizziness or nausea' },
+  { english: 'Are you short of breath even when you’re resting, or mainly when you’re moving around?', chinese: '您休息时也气短，还是主要在活动时气短？', note: 'Respiratory assessment · distinguishes breathlessness at rest from exertion' },
+  { english: 'Any chest pain or tightness?', chinese: '有没有胸痛或胸闷？', note: 'Respiratory assessment · short, natural question under pressure' },
+  { english: 'I’m going to check your oxygen levels and your other observations.', chinese: '我现在检查您的血氧和其他生命体征。', note: 'Respiratory assessment · observations = vital signs' },
+  { english: 'Let’s keep you sitting upright for now.', chinese: '现在我们先让您保持坐直。', note: 'Breathlessness · positioning while help is arranged' },
+  { english: 'I’m going to get your nurse straight away.', chinese: '我马上去叫您的护士。', note: 'Escalation · straight away = immediately' },
+  { english: 'Do you feel like you might vomit?', chinese: '您感觉可能会吐吗？', note: 'Nausea assessment' },
+  { english: 'Have you actually vomited at all?', chinese: '您有真的呕吐过吗？', note: 'Nausea assessment · distinguishes nausea from vomiting' },
+  { english: 'I’ll grab you a vomit bag, just in case.', chinese: '我给您拿一个呕吐袋，以防万一。', note: 'Nausea care · just in case = 以防万一' },
+  { english: 'I’ll check it against your previous observations.', chinese: '我会把这个结果和您之前的生命体征记录进行比较。', note: 'Observations · avoid interpreting one isolated reading' },
+  { english: 'I’m going to count your breathing for a moment. Just breathe normally.', chinese: '我会数一下您的呼吸频率，请正常呼吸。', note: 'Respiratory rate · keep the instruction simple' },
+  { english: 'Is the pain there all the time, or does it come and go?', chinese: '疼痛是一直存在，还是时有时无？', note: 'Pain assessment · come and go = 间歇出现' },
+  { english: 'Has anything helped with the pain so far?', chinese: '到目前为止，有什么方法能缓解疼痛吗？', note: 'Pain assessment · asks about relieving factors' },
+
+  { english: 'You’re not a bother at all. Take your time.', chinese: '您一点也没有麻烦我们，慢慢来。', note: 'Personal care · reassurance that preserves dignity' },
+  { english: 'We’ll make sure you have as much privacy as possible.', chinese: '我们会尽量保护您的隐私。', note: 'Personal care · acknowledge embarrassment and protect dignity' },
+  { english: 'Is there anything else you need before I go?', chinese: '我离开前，您还有什么需要吗？', note: 'Bedside safety check before leaving' },
+  { english: 'I’ll leave your call bell within reach.', chinese: '我会把呼叫铃放在您伸手能够到的位置。', note: 'Bedside safety check' },
+  { english: 'We’d rather you call us so we can help you safely.', chinese: '我们更希望您呼叫我们，这样才能安全地帮助您。', note: 'Falls prevention · warmer than simply saying “You must not get up.”' }
 ];
 
 let selectedVoiceCode = localStorage.getItem(VOICE_KEY) || 'au';
@@ -74,7 +116,26 @@ function saveJSON(key, value) {
 }
 
 function normalizeEnglish(value) {
-  return String(value || '').toLowerCase().replace(/[’']/g, "'").replace(/\s+/g, ' ').trim();
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[’']/g, "'")
+    .replace(/[^a-z0-9']+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function isNearDuplicate(first, second) {
+  const a = normalizeEnglish(first);
+  const b = normalizeEnglish(second);
+  if (!a || !b) return false;
+  if (a === b) return true;
+
+  const aTokens = new Set(a.split(' '));
+  const bTokens = new Set(b.split(' '));
+  const shorterSize = Math.min(aTokens.size, bTokens.size);
+  if (shorterSize < 6) return false;
+  const overlap = [...aTokens].filter(token => bTokens.has(token)).length;
+  return overlap / shorterSize >= 0.9;
 }
 
 function seedClinicalChunks() {
@@ -82,11 +143,11 @@ function seedClinicalChunks() {
 
   const pending = loadPending();
   const learned = loadLearned();
-  const existingEnglish = new Set([...pending, ...learned].map(item => normalizeEnglish(item.english)));
+  const existingEnglish = [...pending, ...learned].map(item => item.english).filter(Boolean);
   const createdDate = new Date().toISOString();
 
   CLINICAL_CHUNKS.forEach((chunk, index) => {
-    if (existingEnglish.has(normalizeEnglish(chunk.english))) return;
+    if (existingEnglish.some(english => isNearDuplicate(english, chunk.english))) return;
     pending.push({
       id: `clinical-placement-${String(index + 1).padStart(2, '0')}`,
       english: chunk.english,
@@ -96,7 +157,7 @@ function seedClinicalChunks() {
       category: 'quickadd-pending',
       createdDate
     });
-    existingEnglish.add(normalizeEnglish(chunk.english));
+    existingEnglish.push(chunk.english);
   });
 
   savePending(pending);
